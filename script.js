@@ -9,7 +9,7 @@ let makeObjectDeepCopy = (obj) => {
 
 let checkArray = (arr) => {
     for (let i = 0; i < arr.length; i++) {
-        if (!(arr[i] - 0))
+        if (!(arr[i] - 0 || arr[i] === 0))
             return false;
         else {
             if (i === arr.length - 1) {
@@ -20,7 +20,7 @@ let checkArray = (arr) => {
 }
 
 let checkInterval = (interval) => {
-    if (!(interval - 0))  return false;
+    if (!(interval - 0)|| !(interval !== 0))  return false;
     else { return true; }
 }
 
@@ -53,14 +53,16 @@ let selectFromInterval = (arr, interval1, interval2) => {
     catch(e) {}
 }
 
+selectFromInterval([1,0,3], -1, 2)
+
 let myIterable = {
-    from: 1,
-    to: '1asds5',
+    from: 0,
+    to: 6,
     [Symbol.iterator]() {
         try {
             if (this.from - 0 || this.from === 0) {
                 this.current = this.from;
-                if (!(this.to - 0) || !(this.to === 0)) {
+                if (!(this.to - 0 || this.to === 0)) {
                     throw new Error ('Невлидное значение to');
                 }
                 return this;
@@ -69,9 +71,7 @@ let myIterable = {
                 throw new Error ('Невлидное значение from');
             }            
         }
-        catch (e) {
-            console.log(e);
-        }
+        catch (e) {}
     },
     next() {
         if (this.current <= this.to) {
